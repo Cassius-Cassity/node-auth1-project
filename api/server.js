@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const usersRouter = require('./users/users-router')
@@ -50,8 +50,6 @@ server.use('/api/auth', authRouter)
 server.get("/", (req, res) => {
   res.json({ api: "up" });
 });
-
-
 
 server.use((err, req, res, next) => { // eslint-disable-line
   res.status(err.status || 500).json({

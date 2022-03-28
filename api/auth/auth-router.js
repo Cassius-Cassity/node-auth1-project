@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const bcryptjs = require('bcryptjs')
 const bcrypt = require('bcryptjs/dist/bcrypt')
-const User = require('../user/user-model')
+const User = require('../users/users-model')
 const {
   checkPasswordLength,
   checkUsernameExists,
@@ -88,7 +88,17 @@ router.post('/register', checkPasswordLength, checkUsernameFree, (req, res, next
   }
  */
   router.get('/logout', (req, res, next) => {
-    res.json('logout')
+    if (req.session.user) {
+      req.session.destroy(err => {
+        if (err) {
+          next(err)
+        } else {
+          res.json({ message: "logged out"})
+        }
+      })
+    } else {
+      res.json({message: "no session"})
+    }
   })
  
 // Don't forget to add the router to the `exports` object so it can be required in other modules
